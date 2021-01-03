@@ -1,0 +1,7 @@
+{
+  "name": "styled-components-clone",
+  "version": "1.0.0",
+  "description": "An clone of styled-components",
+  "main": "index.js",
+  "license": "MIT"
+}
