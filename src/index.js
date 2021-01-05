@@ -5,7 +5,6 @@ for(let tag of tags){
     styled[tag] = (css) => setElement(tag,css);
 }
 
-//HINT: Use events to hover and focus css elements
 function setElement(elementName,css){
     const element = document.createElement(elementName);
     const allCssDivided = css.split('&:hover')
