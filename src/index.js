@@ -1,30 +1,37 @@
+const tags = require('./tags.json');
+
+const styled = {};
+for(let tag of tags){
+    styled[tag] = (css) => setElement(tag,css);
+}
+
+//HINT: Use events to hover and focus css elements
 function setElement(elementName,css){
     const element = document.createElement(elementName);
-    const allLinesOfCss = css.split('\n')
+    const allCssDivided = css.split('&:hover')
+    const cssWithoutEvents = allCssDivided[0];
+    const allLinesOfCss = cssWithoutEvents.split('\n')
 
-    const withoutBlankLinesAndMarkdowns = allLinesOfCss.filter(
+    const withoutBlankLines = allLinesOfCss.filter(
         line =>  !(line.trim().length === 0)
     )
-
-    const cssCleaned = withoutBlankLinesAndMarkdowns.join(' ').trim()
+    
+    const cssCleaned = withoutBlankLines.join(' ').trim()
     element.setAttribute("style", cssCleaned)
+    const hover = allCssDivided[allCssDivided.length - 1];
+    const hoverWithoutBlankLines = hover.split('\n').filter(
+        line =>  !(line.trim().length === 0)
+    ).join(' ').replace('{','').replace('}','').trim()
+    element.addEventListener('mouseover',() => {
+        element.setAttribute("style", cssCleaned + hoverWithoutBlankLines)
+    })
+    element.addEventListener('mouseout',() => {
+        element.setAttribute("style", cssCleaned)
+    })
     return element;
 }
-const styled = {
-    button(css){
-        return setElement('button',css);
-    },
-    a(css){
-        return setElement('a',css);
-    },
-    h1(css){
-        return setElement('h1',css);
-    },    
-    p(css){
-        return setElement('p',css);
-    },
-}
 
+// Using styleJS
 const button = styled.button(`
     padding:20px;
     background-color: red;
@@ -32,10 +39,14 @@ const button = styled.button(`
     border:none;
     cursor: pointer;
     color: white;
+
+    &:hover{
+        background-color: blue;
+    }
 `);
 const p = styled.p(`
+    font-size:20px;
     color: white;
-    text-decoration:underline;
 `)
 
 p.innerText = 'Send';
