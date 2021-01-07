@@ -1,4 +1,5 @@
-const tags = require('./tags.json');
+// Config babel with: https://imranhsayed.medium.com/install-and-set-up-babel-for-your-project-a6ce1fc37633
+const tags = require('get-all-tags-html').getAllTags();
 
 const styled = {};
 for(let tag of tags){
