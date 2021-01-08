@@ -50,32 +50,37 @@ function setElement(elementName,css){
 }
 
 // Using Module
-const button = styled.button(`
-    padding:20px;
-    background-color: red;
-    outline: none;
-    border:none;
-    cursor: pointer;
-    color: white;
-    transition:300ms;
 
-    &:hover{
-        background-color: blue;
-    }
+document.addEventListener('DOMContentLoaded',() => {
+    const button = styled.button(`
+        padding:20px;
+        background-color: red;
+        outline: none;
+        border:none;
+        cursor: pointer;
+        color: white;
+        transition:300ms;
 
-    &:focus{
-        background-color: black;
-    }
-`)
-const p = styled.p(`
-    font-size:20px;
-    color: white;
-`)
+        &:hover{
+            background-color: blue;
+        }
 
-p.innerText = 'Send'
-button.appendChild(p)
+        &:focus{
+            background-color: black;
+        }
+    `)
+    
+    const p = styled.p(`
+        font-size:20px;
+        color: white;
+    `)
 
-const body = document.querySelector('body')
-body.appendChild(button)
+    p.innerText = 'Send'
+    button.appendChild(p)
+
+    const body = document.querySelector('body')
+    body.appendChild(button)
+
+})
 
 export default styled
