@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "webpack --watch --mode=development",
     "prod": "webpack --mode=production",
-    "babel": "./node_modules/.bin/babel src -d dist"
+    "server":"nodemon dist/server.js"
   },
   "dependencies": {
     "@babel/cli": "^7.12.10",
@@ -19,9 +19,13 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "babel-loader": "^8.2.2",
+    "express": "^4.17.1",
     "get-all-tags-html": "^1.0.0",
     "path": "^0.12.7",
     "webpack": "^5.12.1",
     "webpack-cli": "^4.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
