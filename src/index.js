@@ -59,7 +59,7 @@ function setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut){
 const getRandomValue = () => {
     let randomArray = new Uint32Array(20);
     window.crypto.getRandomValues(randomArray);
-    
+
     const randomValue = randomArray[Math.random() * 20]
     return randomValue
 }
