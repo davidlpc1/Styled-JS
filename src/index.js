@@ -56,7 +56,21 @@ function setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut){
     return element;
 }
 
-function keyframes(cssOfAnimation,nameOfAnimation){
+const getRandomValue = () => {
+    let randomArray = new Uint32Array(20);
+    window.crypto.getRandomValues(randomArray);
+    
+    const randomValue = randomArray[Math.random() * 20]
+    return randomValue
+}
+
+function keyframes(cssOfAnimation){
+    if(cssOfAnimation.trim().length === 0){
+        throw new Error('Invalid CSS')
+    }
+
+    const nameOfAnimation = `styledJS-${getRandomValue()}`
+
     const head = document.querySelector('head');
     head.innerHTML += `
         <style>
@@ -79,7 +93,7 @@ document.addEventListener('DOMContentLoaded',() => {
         to {
             transform: rotate(360deg);
         }
-    `,'rotate')
+    `)
     
     const button = styled.button(`
         padding:20px;
