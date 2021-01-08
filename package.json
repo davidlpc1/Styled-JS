@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "webpack --watch --mode=development",
     "prod": "webpack --mode=production",
-    "server":"nodemon dist/server.js"
+    "server": "nodemon dist/server.js",
+    "test": "concurrently \"yarn dev\" \"yarn server\""
   },
   "dependencies": {
     "@babel/cli": "^7.12.10",
@@ -26,6 +27,7 @@
     "webpack-cli": "^4.3.1"
   },
   "devDependencies": {
+    "concurrently": "^5.3.0",
     "nodemon": "^2.0.7"
   }
 }
