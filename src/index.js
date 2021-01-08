@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded',() => {
             background-color: black;
         }
     `)
-    
+
     const p = styled.p(`
         font-size:20px;
         color: white;
