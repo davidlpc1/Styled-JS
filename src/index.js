@@ -56,8 +56,31 @@ function setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut){
     return element;
 }
 
+function keyframes(cssOfAnimation,nameOfAnimation){
+    const head = document.querySelector('head');
+    head.innerHTML += `
+        <style>
+            @keyframes ${nameOfAnimation} {
+                ${cssOfAnimation}
+            }
+        </style>
+    `
+
+    return nameOfAnimation
+}
+
 // ================================================  Using Module  ================================================
 document.addEventListener('DOMContentLoaded',() => {
+    const rotate = keyframes(`
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    `,'rotate')
+    
     const button = styled.button(`
         padding:20px;
         background-color: red;
@@ -66,6 +89,7 @@ document.addEventListener('DOMContentLoaded',() => {
         cursor: pointer;
         color: white;
         transition:300ms;
+        animation: ${rotate} 1s;
 
         &:hover{
             background-color: blue;
