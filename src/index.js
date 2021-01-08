@@ -64,7 +64,7 @@ const getRandomValue = () => {
     return randomValue
 }
 
-function keyframes(cssOfAnimation){
+styled.keyframes = (cssOfAnimation) => {
     if(cssOfAnimation.trim().length === 0){
         throw new Error('Invalid CSS')
     }
@@ -119,12 +119,11 @@ document.addEventListener('DOMContentLoaded',() => {
         color: white;
     `)
 
+    console.log(button)
     p.innerText = 'Send'
     button.appendChild(p)
 
     const body = document.querySelector('body')
     body.appendChild(button)
 
-})
-
-export default styled
+}) 
