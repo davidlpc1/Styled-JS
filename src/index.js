@@ -65,17 +65,13 @@ const getRandomValue = () => {
 }
 
 styled.keyframes = (cssOfAnimation) => {
-    if(cssOfAnimation.trim().length === 0){
-        throw new Error('Invalid CSS')
-    }
-
     const nameOfAnimation = `styledJS-${getRandomValue()}`
 
     const head = document.querySelector('head');
     head.innerHTML += `
         <style>
             @keyframes ${nameOfAnimation} {
-                ${cssOfAnimation}
+                ${cssOfAnimation.raw[0]}
             }
         </style>
     `
@@ -85,15 +81,14 @@ styled.keyframes = (cssOfAnimation) => {
 
 // ================================================  Using Module  ================================================
 document.addEventListener('DOMContentLoaded',() => {
-    const rotate = keyframes(`
+    const rotate = styled.keyframes`
         from {
             transform: rotate(0deg);
         }
-
         to {
             transform: rotate(360deg);
         }
-    `)
+    `
     
     const button = styled.button(`
         padding:20px;
@@ -104,11 +99,9 @@ document.addEventListener('DOMContentLoaded',() => {
         color: white;
         transition:300ms;
         animation: ${rotate} 1s;
-
         &:hover{
             background-color: blue;
         }
-
         &:focus{
             background-color: black;
         }
@@ -119,7 +112,6 @@ document.addEventListener('DOMContentLoaded',() => {
         color: white;
     `)
 
-    console.log(button)
     p.innerText = 'Send'
     button.appendChild(p)
 
