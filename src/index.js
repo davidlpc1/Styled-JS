@@ -7,9 +7,10 @@ for(let tag of tags){
 }
 
 function setElement(elementName,css){
-    const element = document.createElement(elementName)
-    const allCssDividedInNormalAndHover = css.split('&:hover')
+    let element = document.createElement(elementName)
+
     const allCssDividedInNormalAndFocus = css.split('&:focus')
+    const allCssDividedInNormalAndHover = css.split('&:hover');
     const cssWithoutHoverEvent = allCssDividedInNormalAndHover[0]
     const allLinesOfNormalCSS = cssWithoutHoverEvent.split('\n')
 
@@ -20,37 +21,42 @@ function setElement(elementName,css){
     const CSSCleaned = withoutBlankLines.join(' ').trim()
     element.setAttribute("style", CSSCleaned)
 
-    if(allCssDividedInNormalAndHover.length >= 2){
-        const hover = allCssDividedInNormalAndHover[allCssDividedInNormalAndHover.length - 1]
-        const hoverWithoutBlankLines = hover.split('\n').filter(
-            line =>  !(line.trim().length === 0)
-        ).join(' ').replace('{','').replace('}','').trim()
-        element.addEventListener('mouseover',() => {
-            element.setAttribute("style", CSSCleaned + hoverWithoutBlankLines)
-        })
-        element.addEventListener('mouseout',() => {
-            element.setAttribute("style", CSSCleaned)
-        })
-    }
+    const events = [
+        { eventName:'&:hover',eventOver:'mouseover',eventOut:'mouseout' },
+        { eventName:'&:focus',eventOver:'focusin',eventOut:'focusout'}
+    ]
 
-    if(allCssDividedInNormalAndFocus.length >= 2){
-        const focus = allCssDividedInNormalAndFocus[allCssDividedInNormalAndFocus.length - 1]
-        const focusWithoutBlankLines = focus.split('\n').filter(line =>  
-            !(line.trim().length === 0)
-        ).join(' ').replace('{','').replace('}','').trim()
-        element.addEventListener('focusin',() => {
-            element.setAttribute("style", CSSCleaned + focusWithoutBlankLines)
-        })
-        element.addEventListener('focusout',() => {
-            element.setAttribute("style", CSSCleaned)
-        })
-    }
+    events.forEach(({
+        eventName,eventOver,eventOut
+    }) => {
+        element = setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut)
+    })
 
     return element
 }
 
-// Using Module
+function setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut){
+    const allCssDividedInNormalAndThatEvent = css.split(eventName)
+    if(allCssDividedInNormalAndThatEvent.length >= 2){
+        const thatEvent = allCssDividedInNormalAndThatEvent[allCssDividedInNormalAndThatEvent.length - 1]
+        const thatEventWithoutBlankLines = thatEvent
+            .split('\n')
+            .filter( line =>  !(line.trim().length === 0))
+            .join(' ')
+            .replace('{','').replace('}','')
+            .trim()
+        element.addEventListener(eventOver,() => {
+            element.setAttribute("style", CSSCleaned + thatEventWithoutBlankLines)
+        })
+        element.addEventListener(eventOut,() => {
+            element.setAttribute("style", CSSCleaned)
+        })
+    }
 
+    return element;
+}
+
+// ================================================  Using Module  ================================================
 document.addEventListener('DOMContentLoaded',() => {
     const button = styled.button(`
         padding:20px;
