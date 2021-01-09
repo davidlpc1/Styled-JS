@@ -35,7 +35,7 @@ const setElement = (elementName,css) => {
     return element
 }
 
-function setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut){
+const setEvent = (element,css,CSSCleaned,eventName,eventOver,eventOut) => {
     const allCssDividedInNormalAndThatEvent = css.split(eventName)
     if(allCssDividedInNormalAndThatEvent.length >= 2){
         const thatEvent = allCssDividedInNormalAndThatEvent[allCssDividedInNormalAndThatEvent.length - 1]
