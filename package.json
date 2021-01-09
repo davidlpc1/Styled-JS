@@ -1,6 +1,6 @@
 {
   "name": "styled-components-clone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/main.js",
   "repository": "https://github.com/davidlpc1/Styled-components.git",
   "author": "Davi Lucas <davilucasdlcreator@gmail.com>",
