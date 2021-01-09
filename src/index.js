@@ -117,3 +117,5 @@ styled.mediaQuery = (Event,css) => {
         }
     `)
 }
+
+export default styled;

@@ -1,15 +1,13 @@
 {
   "name": "styled-components-clone",
-  "version": "1.0.1",
+  "version": "1.0.1.1",
   "main": "dist/main.js",
   "repository": "https://github.com/davidlpc1/Styled-components.git",
   "author": "Davi Lucas <davilucasdlcreator@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "webpack --watch --mode=development",
-    "prod": "webpack --mode=production",
-    "server": "nodemon dist/server.js",
-    "test": "concurrently \"yarn dev\" \"yarn server\""
+    "prod": "webpack --mode=production"
   },
   "dependencies": {
     "@babel/cli": "^7.12.10",
