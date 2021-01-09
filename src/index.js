@@ -6,7 +6,7 @@ for(let tag of tags){
     styled[tag] = (CSS) => setElement(tag,CSS)
 }
 
-function setElement(elementName,css){
+const setElement = (elementName,css) => {
     let element = document.createElement(elementName)
 
     const allCssDividedInNormalAndFocus = css.split('&:focus')
