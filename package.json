@@ -1,7 +1,7 @@
 {
   "name": "styled-components-clone",
   "version": "0.0.212",
-  "main": "bundle.js",
+  "main": "src/bundle.js",
   "repository": "https://github.com/davidlpc1/Styled-components.git",
   "author": "Davi Lucas <davilucasdlcreator@gmail.com>",
   "license": "MIT",
