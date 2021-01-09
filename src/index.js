@@ -4,14 +4,26 @@ const tags = tagsModule.getAllTags()
 const styled = {}
 for(let tag of tags){
     styled[tag] = (css) => {
-        let allCSS = '';
-        css.raw.forEach(rawCSS => allCSS += String(rawCSS))
+        // ISSUE:Keyframes are not working in raw of string,because variables of template string is not here
+        let allCSS = ''; 
+        css.forEach(rawCSS => {allCSS += String(rawCSS);})
         return setElement(tag,allCSS)
     }
 }
 
-const setElement = (elementName,css) => {
-    let element = document.createElement(elementName)
+styled.events = [
+    { eventName:'&:hover',eventOver:'mouseover',eventOut:'mouseout' },
+    { eventName:'&:focus',eventOver:'focusin',eventOut:'focusout'}
+]
+
+const setElement = (elementName,css,thatElementsAlreadyExists=false) => {
+    let element;
+    if(!thatElementsAlreadyExists) { 
+        element = document.createElement(elementName)
+    }
+    else {
+        element = document.querySelector(elementName)
+    }
 
     const allCssDividedInNormalAndEvent = css.split('&:');
     const cssWithoutEvent = allCssDividedInNormalAndEvent[0]
@@ -24,12 +36,7 @@ const setElement = (elementName,css) => {
     const CSSCleaned = withoutBlankLines.join(' ').trim()
     element.setAttribute("style", CSSCleaned)
 
-    const events = [
-        { eventName:'&:hover',eventOver:'mouseover',eventOut:'mouseout' },
-        { eventName:'&:focus',eventOver:'focusin',eventOut:'focusout'}
-    ]
-
-    events.forEach(({
+    styled.events.forEach(({
         eventName,eventOver,eventOut
     }) => {
         element = setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut)
@@ -59,31 +66,61 @@ const setEvent = (element,css,CSSCleaned,eventName,eventOver,eventOut) => {
     return element;
 }
 
-styled.keyframes = (cssOfAnimation) => {
-    const getRandomValue = () => {
-        let randomArray = new Uint32Array(20);
-        window.crypto.getRandomValues(randomArray);
-    
-        const randomValue = randomArray[Math.random() * 20]
-        return randomValue
-    }
-
-    const nameOfAnimation = `styledJS-${getRandomValue()}`
-
+styled.addCSSInHead = (css) => {
     const head = document.querySelector('head');
     head.innerHTML += `
         <style>
-            @keyframes ${nameOfAnimation} {
-                ${cssOfAnimation.raw[0]}
-            }
+            ${css}
         </style>
     `
+}
+
+styled.keyframes = (cssOfAnimation) => {
+    const getRandomValue = () => parseInt(Math.random() * (Math.random() * 100000000000000))
+    const nameOfAnimation = `styledJS-${getRandomValue()}`
+
+    styled.addCSSInHead(`
+        @keyframes ${nameOfAnimation} {
+            ${cssOfAnimation.raw[0].trim()}
+        }
+    `)
 
     return nameOfAnimation
 }
 
+styled.addToBody = (element) => {
+    const body = document.querySelector('body')
+    body.appendChild(element)
+}
+
+styled.removeFromBody = (element) => {
+    const body = document.querySelector('body')
+    body.removeChild(element)
+}
+
+styled.body = (css) => setElement('body',css,true)
+styled.html = (css) => setElement('html',css,true)
+
+styled.resetCSS = () =>  {
+    styled.body(`margin: 0; padding: 0; box-sizing: border-box;`);
+    styled.html(`margin: 0; padding: 0; box-sizing: border-box;`)
+}
+
+styled.onDOMContentLoaded = (callback) => {
+    document.addEventListener('DOMContentLoaded',callback)
+}
+
+styled.mediaQuery = (Event,css) => {
+    styled.addCSSInHead(`
+        @media ${Event} {
+            ${css.trim()}
+        }
+    `)
+}
+
 // ================================================  Using Module  ================================================
-document.addEventListener('DOMContentLoaded',() => {
+styled.onDOMContentLoaded(() => {
+    styled.resetCSS()
     const rotate = styled.keyframes`
         from {
             transform: rotate(0deg);
@@ -92,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => {
             transform: rotate(360deg);
         }
     `
-    
+
     const button = styled.button`
         padding:20px;
         background-color: red;
@@ -100,7 +137,7 @@ document.addEventListener('DOMContentLoaded',() => {
         border:none;
         cursor: pointer;
         color: white;
-        transition:300ms;
+        transition:800ms;
         animation: ${rotate} 1s;
         &:hover{
             background-color: blue;
@@ -120,7 +157,6 @@ document.addEventListener('DOMContentLoaded',() => {
         justify-content: center;
         align-items: center;
         background-color:lightblue;
-        padding:10px;
         height:100vh;
     `
 
@@ -128,7 +164,11 @@ document.addEventListener('DOMContentLoaded',() => {
     button.appendChild(p)
     div.appendChild(button)
 
-    const body = document.querySelector('body')
-    body.appendChild(div)
+    styled.addToBody(div)
 
+    styled.mediaQuery('(min-width:778px)',`
+        button{
+            padding:50px !important;
+        }
+    `)
 }) 
