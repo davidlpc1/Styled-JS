@@ -1,4 +1,4 @@
-import * as tagsModule from '../node_modules/get-all-tags-html/src/index'
+const tagsModule = require('../node_modules/get-all-tags-html/src/index')
 const tags = tagsModule.getAllTags()
 
 const styled = {}
@@ -118,4 +118,4 @@ styled.mediaQuery = (Event,css) => {
     `)
 }
 
-export default styled;
+module.exports = styled
