@@ -3,10 +3,10 @@ const tags = tagsModule.getAllTags()
 
 const styled = {}
 for(let tag of tags){
-    styled[tag] = (css) => {
-        // ISSUE:Keyframes are not working in raw of string,because variables of template string is not here
+    styled[tag] = (css,...values) => {
         let allCSS = ''; 
-        css.forEach(rawCSS => {allCSS += String(rawCSS);})
+        css.forEach((rawCSS,index) => {allCSS += String(rawCSS + values[index]);})
+        console.log(allCSS)
         return setElement(tag,allCSS)
     }
 }
@@ -102,7 +102,7 @@ styled.body = (css) => setElement('body',css,true)
 styled.html = (css) => setElement('html',css,true)
 
 styled.resetCSS = () =>  {
-    styled.body(`margin: 0; padding: 0; box-sizing: border-box;`);
+    styled.body(`margin: 0; padding: 0; box-sizing: border-box;`)
     styled.html(`margin: 0; padding: 0; box-sizing: border-box;`)
 }
 
