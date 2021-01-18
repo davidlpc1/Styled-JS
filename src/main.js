@@ -6,7 +6,6 @@ for(let tag of tags){
     styled[tag] = (css,...values) => {
         let allCSS = ''; 
         css.forEach((rawCSS,index) => {allCSS += String(rawCSS + values[index]);})
-        console.log(allCSS)
         return setElement(tag,allCSS)
     }
 }
