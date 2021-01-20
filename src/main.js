@@ -1,5 +1,5 @@
-const tagsModule = require('../node_modules/get-all-tags-html/src/index')
-const tags = tagsModule.getAllTags()
+import { getAllTags } from '../node_modules/get-all-tags-html/src/index'
+const tags = getAllTags()
 
 const styled = {}
 for(let tag of tags){
@@ -117,4 +117,4 @@ styled.mediaQuery = (Event,css) => {
     `)
 }
 
-module.exports = styled
+export default styled
