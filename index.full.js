@@ -1,4 +1,4 @@
-import { getAllTags } from 'https://cdn.jsdelivr.net/npm/styled-components-clone@0.0.235/index.min.js'
+import { getAllTags } from './node_modules/get-all-tags-html/src/index'
 const tags = getAllTags()
 
 const styled = {}

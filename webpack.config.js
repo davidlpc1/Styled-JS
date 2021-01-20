@@ -1,9 +1,13 @@
-const path = require( 'path' );module.exports = {
+const path = require( 'path' );
+module.exports = {
     context: __dirname,
-    entry: './src/main.js',
+    entry: {
+        main:'./src/main.js',
+        cdn:'./index.full.js'
+    },
     output: {
         path: path.resolve( __dirname, 'src' ),
-        filename: 'index.js',
+        filename: '[name].js',
     },
     module: {
         rules: [
