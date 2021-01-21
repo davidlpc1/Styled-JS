@@ -1,7 +1,5 @@
 import styled from './styled'
 
-console.log(styled)
-
 styled.onDOMContentLoaded(() => {
     styled.resetCSS()
     const rotate = styled.keyframes`
