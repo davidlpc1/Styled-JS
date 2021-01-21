@@ -1,4 +1,4 @@
-import { getAllTags } from './node_modules/get-all-tags-html/src/index'
+import { getAllTags } from '../node_modules/get-all-tags-html/src/index'
 const tags = getAllTags()
 
 const styled = {}
@@ -116,3 +116,5 @@ styled.mediaQuery = (Event,css) => {
         }
     `)
 }
+
+export default styled

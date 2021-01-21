@@ -1,120 +1,51 @@
-import { getAllTags } from './node_modules/get-all-tags-html/src/index'
-const tags = getAllTags()
+import styled from './styled'
 
-const styled = {}
-for(let tag of tags){
-    styled[tag] = (css,...values) => {
-        let allCSS = ''; 
-        css.forEach((rawCSS,index) => {allCSS += String(rawCSS + values[index]);})
-        return setElement(tag,allCSS)
-    }
-}
+console.log(styled)
 
-styled.events = [
-    { eventName:'&:hover',eventOver:'mouseover',eventOut:'mouseout' },
-    { eventName:'&:focus',eventOver:'focusin',eventOut:'focusout'}
-]
-
-const setElement = (elementName,css,thatElementsAlreadyExists=false) => {
-    let element;
-    if(!thatElementsAlreadyExists) { 
-        element = document.createElement(elementName)
-    }
-    else {
-        element = document.querySelector(elementName)
-    }
-
-    const allCssDividedInNormalAndEvent = css.split('&:');
-    const cssWithoutEvent = allCssDividedInNormalAndEvent[0]
-    const allLinesOfNormalCSS = cssWithoutEvent.split('\n')
-
-    const withoutBlankLines = allLinesOfNormalCSS.filter(
-        line =>  !(line.trim().length === 0)
-    )
-    
-    const CSSCleaned = withoutBlankLines.join(' ').trim()
-    element.setAttribute("style", CSSCleaned)
-
-    styled.events.forEach(({
-        eventName,eventOver,eventOut
-    }) => {
-        element = setEvent(element,css,CSSCleaned,eventName,eventOver,eventOut)
-    })
-
-    return element
-}
-
-const setEvent = (element,css,CSSCleaned,eventName,eventOver,eventOut) => {
-    const allCssDividedInNormalAndThatEvent = css.split(eventName)
-    if(allCssDividedInNormalAndThatEvent.length >= 2){
-        const thatEvent = allCssDividedInNormalAndThatEvent[allCssDividedInNormalAndThatEvent.length - 1]
-        const thatEventWithoutBlankLines = thatEvent
-            .split('\n')
-            .filter( line =>  !(line.trim().length === 0))
-            .join(' ')
-            .replace('{','').replace('}','')
-            .trim()
-        element.addEventListener(eventOver,() => {
-            element.setAttribute("style", CSSCleaned + thatEventWithoutBlankLines)
-        })
-        element.addEventListener(eventOut,() => {
-            element.setAttribute("style", CSSCleaned)
-        })
-    }
-
-    return element;
-}
-
-styled.addCSSInHead = (css) => {
-    const head = document.querySelector('head');
-    head.innerHTML += `
-        <style>
-            ${css}
-        </style>
+styled.onDOMContentLoaded(() => {
+    styled.resetCSS()
+    const rotate = styled.keyframes`
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
     `
-}
 
-styled.keyframes = (cssOfAnimation) => {
-    const getRandomValue = () => parseInt(Math.random() * (Math.random() * 100000000000000))
-    const nameOfAnimation = `styledJS-${getRandomValue()}`
-
-    styled.addCSSInHead(`
-        @keyframes ${nameOfAnimation} {
-            ${cssOfAnimation.raw[0].trim()}
+    const button = styled.button`
+        padding:20px;
+        background-color: red;
+        outline: none;
+        border:none;
+        cursor: pointer;
+        color: white;
+        transition:800ms;
+        animation: ${rotate} 1s;
+        &:hover{
+            background-color: blue;
         }
-    `)
-
-    return nameOfAnimation
-}
-
-styled.addToBody = (element) => {
-    const body = document.querySelector('body')
-    body.appendChild(element)
-}
-
-styled.removeFromBody = (element) => {
-    const body = document.querySelector('body')
-    body.removeChild(element)
-}
-
-styled.body = (css) => setElement('body',css,true)
-styled.html = (css) => setElement('html',css,true)
-
-styled.resetCSS = () =>  {
-    styled.body(`margin: 0; padding: 0; box-sizing: border-box;`)
-    styled.html(`margin: 0; padding: 0; box-sizing: border-box;`)
-}
-
-styled.onDOMContentLoaded = (callback) => {
-    document.addEventListener('DOMContentLoaded',callback)
-}
-
-styled.mediaQuery = (Event,css) => {
-    styled.addCSSInHead(`
-        @media ${Event} {
-            ${css.trim()}
+        &:focus{
+            background-color: black;
         }
-    `)
-}
+    `
 
-export default styled
+    const p = styled.p`
+        font-size:20px;
+        color: white;
+    `
+
+    const div = styled.div`
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        background-color:lightblue;
+        height:100vh;
+    `
+
+    p.innerText = 'Send'
+    button.appendChild(p)
+    div.appendChild(button)
+
+    styled.addToBody(div)
+}) 
