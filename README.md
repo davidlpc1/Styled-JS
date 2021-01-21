@@ -1,7 +1,12 @@
 # Styled-JS
-Um clone do styled-components para páginas HTML simples
-<a href="https://snyk.io/test/npm/styled-components-clone/1.0.0"><img src="https://snyk.io/test/npm/styled-components-clone/1.0.0/badge.svg" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/npm/styled-components-clone/1.0.0" style="max-width:100%;"></a>
-
+## Um clone do styled-components para páginas HTML simples
+[![Known Vulnerabilities](https://snyk.io/test/github/davidlpc1/Styled-JS/badge.svg?targetFile=package.json)](https://snyk.io/test/github/davidlpc1/Styled-JS?targetFile=package.json)
+### Styled-components-clone deprected use davidlpc1-styled-js instead
 ```
-    npm instal --save davidlpc1-styled-js
+    npm install --save davidlpc1-styled-js
+```
+
+### OR
+```
+    yarn add davidlpc1-styled-js
 ```
